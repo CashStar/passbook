@@ -384,13 +384,14 @@ class Pass(object):
             'suppressStripShine': self.suppressStripShine,
             self.passInformation.jsonname: self.passInformation.json_dict()
         }
-        #barcodes have 2 fields, 'barcode' is legacy so limit it to the legacy formats, 'barcodes' supports all
+        # barcodes have 2 fields, 'barcode' is legacy so limit it to the legacy formats, 'barcodes' supports all
+        # recent iOS, iPadOS, and watchOS versions all support Code128
         if self.barcode:
             original_formats = [BarcodeFormat.PDF417, BarcodeFormat.QR, BarcodeFormat.AZTEC]
             legacyBarcode = self.barcode
             newBarcodes = [self.barcode.json_dict()]
             if self.barcode.format not in original_formats:
-                legacyBarcode = Barcode(self.barcode.message, BarcodeFormat.PDF417, self.barcode.altText)
+                legacyBarcode = Barcode(self.barcode.message, BarcodeFormat.PDF417, self.barcode.altText or  '')
             d.update({'barcodes': newBarcodes})
             d.update({'barcode': legacyBarcode})
 
