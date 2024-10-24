@@ -391,7 +391,7 @@ class Pass(object):
             legacyBarcode = self.barcode
             newBarcodes = [self.barcode.json_dict()]
             if self.barcode.format not in original_formats:
-                legacyBarcode = Barcode(self.barcode.message, BarcodeFormat.PDF417, self.barcode.altText or  '')
+                legacyBarcode = Barcode(self.barcode.message, BarcodeFormat.PDF417, getattr(self.barcode, 'altText',  ''))
             d.update({'barcodes': newBarcodes})
             d.update({'barcode': legacyBarcode})
 
